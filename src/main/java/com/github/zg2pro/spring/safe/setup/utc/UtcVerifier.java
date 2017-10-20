@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * To make sure your host is configured in UTC timezone, create a spring bean in
  * spring config as follows:
  *
- * @Bean Boolean checkHostTimezone(){ UtcVerifier.checkHostTimezone(); return
+ * atBean Boolean checkHostTimezone(){ UtcVerifier.checkHostTimezone(); return
  * Boolean.TRUE; }
  *
  * @author zg2pro
