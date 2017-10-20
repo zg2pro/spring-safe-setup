@@ -103,8 +103,7 @@ public class PreAuthorizeAllRemoteStrategy {
     private List<Class> findByAnntotationAndRootPackagePath(String packageClass, Class... annotationClass) throws IOException, ClassNotFoundException {
         List<Class> serviceClasses = new ArrayList<>();
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath*:/" + packageClass + "/**/*.class");
-        for (Resource resource : resources) {
+        for (Resource resource : resolver.getResources("classpath*:/" + packageClass + "/**/*.class")) {
             if (isNotTestClass(resource)) {
                 Class serviceClassCandidate = parseClassNameWithPackage(resource);
                 for (Class annotationElement : annotationClass) {
@@ -141,6 +140,31 @@ public class PreAuthorizeAllRemoteStrategy {
         return m;
     }
 
+    private void throwableProcessVerification() throws IOException, ClassNotFoundException, SecurityException {
+        Map<Method, Method> remoteToServ = new HashMap<>();
+        for (Class c : findServiceClasses()) {
+            // Used to check all services' methods.
+            //So we must use 'getDeclaredMethods' reflection method to do the job.
+            for (Method beanMethod : c.getDeclaredMethods()) {
+                Method interfaceMeth = searchRemote(c, beanMethod);
+                if (interfaceMeth != null) {
+                    remoteToServ.put(interfaceMeth, beanMethod);
+                }
+            }
+        }
+        for (Method remoteMethod : remoteToServ.keySet()) {
+            if (!remoteMethod.isAnnotationPresent(annotationUsedForPermissions)) {
+                throw new SecurityException("all remote methods must be annotated with @"
+                        + annotationUsedForPermissions.getSimpleName() + ": " + remoteMethod);
+            }
+            if (!remoteToServ.get(remoteMethod).isAnnotationPresent(PreAuthorize.class)) {
+                throw new SecurityException("all remote methods must be annotated with @PreAuthorize: "
+                        + remoteMethod);
+            }
+        }
+    }
+
+
     /**
      * runs the check and throws a SecurityException if a problem is
      * encountered, either a PreAuthorize is missing or you did not assign
@@ -148,30 +172,9 @@ public class PreAuthorizeAllRemoteStrategy {
      */
     public void processVerification() {
         try {
-            Map<Method, Method> remoteToServ = new HashMap<>();
-            for (Class c : findServiceClasses()) {
-                // Used to check all services' methods. 
-                //So we must use 'getDeclaredMethods' reflection method to do the job.
-                for (Method beanMethod : c.getDeclaredMethods()) {
-                    Method interfaceMeth = searchRemote(c, beanMethod);
-                    if (interfaceMeth != null) {
-                        remoteToServ.put(interfaceMeth, beanMethod);
-                    }
-                }
-            }
-            for (Method remoteMethod : remoteToServ.keySet()) {
-                if (!remoteMethod.isAnnotationPresent(annotationUsedForPermissions)) {
-                    throw new SecurityException("all remote methods must be annotated with @"
-                            + annotationUsedForPermissions.getSimpleName() + ": " + remoteMethod);
-                }
-                if (!remoteToServ.get(remoteMethod).isAnnotationPresent(PreAuthorize.class)) {
-                    throw new SecurityException("all remote methods must be annotated with @PreAuthorize: "
-                            + remoteMethod);
-                }
-            }
+            throwableProcessVerification();
         } catch (ClassNotFoundException | IOException e) {
             throw new IllegalStateException(e);
         }
     }
-
 }
