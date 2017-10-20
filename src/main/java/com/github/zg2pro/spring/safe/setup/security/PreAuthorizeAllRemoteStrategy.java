@@ -92,7 +92,7 @@ public class PreAuthorizeAllRemoteStrategy {
             className = resourcePath.split("!")[1];
         } else if (resourcePath.contains("WEB-INF/classes")) {
             className = resourcePath.split("WEB-INF/classes")[1];
-        } else if (resourcePath.contains("test-classes")){
+        } else if (resourcePath.contains("test-classes")) {
             className = resourcePath.split("test-classes")[1];
         } else {
             className = resourcePath.split("target/classes")[1];
@@ -100,15 +100,17 @@ public class PreAuthorizeAllRemoteStrategy {
         return Class.forName(className.replaceAll("/", ".").replaceAll("\\.class", "").substring(1));
     }
 
-    private List<Class> findByAnntotationAndRootPackagePath(Class annotationClass, String packageClass) throws IOException, ClassNotFoundException {
+    private List<Class> findByAnntotationAndRootPackagePath(String packageClass, Class... annotationClass) throws IOException, ClassNotFoundException {
         List<Class> serviceClasses = new ArrayList<>();
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resolver.getResources("classpath*:/" + packageClass + "/**/*.class");
         for (Resource resource : resources) {
             if (isNotTestClass(resource)) {
                 Class serviceClassCandidate = parseClassNameWithPackage(resource);
-                if (serviceClassCandidate.isAnnotationPresent(annotationClass)) {
-                    serviceClasses.add(serviceClassCandidate);
+                for (Class annotationElement : annotationClass) {
+                    if (serviceClassCandidate.isAnnotationPresent(annotationElement)) {
+                        serviceClasses.add(serviceClassCandidate);
+                    }
                 }
             }
         }
@@ -118,9 +120,7 @@ public class PreAuthorizeAllRemoteStrategy {
     private List<Class> findServiceClasses() throws IOException, ClassNotFoundException {
         String servicesPath = rootPackageOfYourBeans.replaceAll("\\.", "/");
         logger.debug("checking all security locks have been put on web services, using path: {}", servicesPath);
-        List<Class> services = findByAnntotationAndRootPackagePath(Service.class, servicesPath);
-        services.addAll(findByAnntotationAndRootPackagePath(Component.class, servicesPath));
-        return services;
+        return findByAnntotationAndRootPackagePath(servicesPath, Service.class, Component.class);
     }
 
     private Method searchRemote(Class clazz, Method meth) {
@@ -142,9 +142,9 @@ public class PreAuthorizeAllRemoteStrategy {
     }
 
     /**
-     * runs the check and throws a SecurityException if a problem
-     * is encountered, either a PreAuthorize is missing or you 
-     * did not assign permissions to your remote service
+     * runs the check and throws a SecurityException if a problem is
+     * encountered, either a PreAuthorize is missing or you did not assign
+     * permissions to your remote service
      */
     public void processVerification() {
         try {
