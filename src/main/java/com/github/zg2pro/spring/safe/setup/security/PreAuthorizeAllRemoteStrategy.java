@@ -35,6 +35,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -117,7 +118,9 @@ public class PreAuthorizeAllRemoteStrategy {
     private List<Class> findServiceClasses() throws IOException, ClassNotFoundException {
         String servicesPath = rootPackageOfYourBeans.replaceAll("\\.", "/");
         logger.debug("checking all security locks have been put on web services, using path: {}", servicesPath);
-        return findByAnntotationAndRootPackagePath(Service.class, servicesPath);
+        List<Class> services = findByAnntotationAndRootPackagePath(Service.class, servicesPath);
+        services.addAll(findByAnntotationAndRootPackagePath(Component.class, servicesPath));
+        return services;
     }
 
     private Method searchRemote(Class clazz, Method meth) {
