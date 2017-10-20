@@ -140,7 +140,7 @@ public class PreAuthorizeAllRemoteStrategy {
         return m;
     }
 
-    private void throwableProcessVerification() throws IOException, ClassNotFoundException, SecurityException {
+    private Map<Method, Method> interfaceToBeanMethodMap() throws IOException, SecurityException, ClassNotFoundException {
         Map<Method, Method> remoteToServ = new HashMap<>();
         for (Class c : findServiceClasses()) {
             // Used to check all services' methods.
@@ -152,6 +152,11 @@ public class PreAuthorizeAllRemoteStrategy {
                 }
             }
         }
+        return remoteToServ;
+    }
+
+    private void throwableProcessVerification() throws IOException, ClassNotFoundException, SecurityException {
+        Map<Method, Method> remoteToServ = interfaceToBeanMethodMap();
         for (Method remoteMethod : remoteToServ.keySet()) {
             if (!remoteMethod.isAnnotationPresent(annotationUsedForPermissions)) {
                 throw new SecurityException("all remote methods must be annotated with @"
