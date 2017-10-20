@@ -122,24 +122,6 @@ public class PreAuthorizeAllRemoteStrategy {
         return findByAnntotationAndRootPackagePath(servicesPath, Service.class, Component.class);
     }
 
-    private Method searchRemote(Class clazz, Method meth) {
-        Method m = null;
-        for (Class clazzI : clazz.getInterfaces()) {
-            if (clazzI.getSimpleName().endsWith("Remote")) {
-                try {
-                    m = clazzI.getMethod(meth.getName(), meth.getParameterTypes());
-                    break;
-                } catch (NoSuchMethodException ex) {
-                    logger.trace("method does not exist in the Remote interface: ", ex);
-                    return null;
-                }
-            } else if (!clazzI.getSimpleName().endsWith("Local")) {
-                m = searchRemote(clazzI, meth);
-            }
-        }
-        return m;
-    }
-
     private Map<Method, Method> interfaceToBeanMethodMap() throws IOException, SecurityException, ClassNotFoundException {
         Map<Method, Method> remoteToServ = new HashMap<>();
         for (Class c : findServiceClasses()) {
@@ -167,6 +149,31 @@ public class PreAuthorizeAllRemoteStrategy {
                         + remoteMethod);
             }
         }
+    }
+
+    /**
+     * helps you search a signature equivalent to the one in argument
+     * in your remote interface implemented by the current class
+     * @param clazz
+     * @param meth
+     * @return 
+     */
+    public static Method searchRemote(Class clazz, Method meth) {
+        Method m = null;
+        for (Class clazzI : clazz.getInterfaces()) {
+            if (clazzI.getSimpleName().endsWith("Remote")) {
+                try {
+                    m = clazzI.getMethod(meth.getName(), meth.getParameterTypes());
+                    break;
+                } catch (NoSuchMethodException ex) {
+                    logger.trace("method does not exist in the Remote interface: ", ex);
+                    return null;
+                }
+            } else if (!clazzI.getSimpleName().endsWith("Local")) {
+                m = searchRemote(clazzI, meth);
+            }
+        }
+        return m;
     }
 
 

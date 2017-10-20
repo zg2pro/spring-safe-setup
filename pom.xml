@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.github.zg2pro</groupId>
         <artifactId>zg2pro-spring-core</artifactId>
-        <version>0.1</version>
+        <version>0.2</version>
     </parent> 
 
     <groupId>com.github.zg2pro</groupId>
@@ -15,7 +15,7 @@
     <name>spring-safe-setup</name>
     <description>A library of tools to make safety checks upon build or startup of your spring app</description>
     <packaging>jar</packaging>
-    <version>0.1</version>
+    <version>0.2-SNAPSHOT</version>
     <url>https://github.com/zg2pro/spring-safe-setup</url>
     
 
@@ -49,7 +49,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
+            <artifactId>spring-security-config</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
