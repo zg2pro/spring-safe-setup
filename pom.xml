@@ -15,7 +15,7 @@
     <name>spring-safe-setup</name>
     <description>A library of tools to make safety checks upon build or startup of your spring app</description>
     <packaging>jar</packaging>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <url>https://github.com/zg2pro/spring-safe-setup</url>
     
 
