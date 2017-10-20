@@ -1,6 +1,4 @@
-package com.github.zg2pro.spring.rest.basis.security.test.two;
-
-import com.github.zg2pro.spring.rest.basis.security.test.one.*;
+package com.github.zg2pro.spring.safe.setup.security.test.two;
 
 /**
  *

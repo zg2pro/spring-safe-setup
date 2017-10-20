@@ -1,4 +1,4 @@
-package com.github.zg2pro.spring.rest.basis.security.test;
+package com.github.zg2pro.spring.safe.setup.security.test;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

@@ -1,6 +1,6 @@
-package com.github.zg2pro.spring.rest.basis.security;
+package com.github.zg2pro.spring.safe.setup.security;
 
-import com.github.zg2pro.spring.rest.basis.security.test.PermissionCheckAnnotation;
+import com.github.zg2pro.spring.safe.setup.security.test.PermissionCheckAnnotation;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;

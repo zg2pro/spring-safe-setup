@@ -1,7 +1,7 @@
-package com.github.zg2pro.spring.rest.basis.security.test.two;
+package com.github.zg2pro.spring.safe.setup.security.test.two;
 
-import com.github.zg2pro.spring.rest.basis.security.test.PermissionCheckAnnotation;
-import com.github.zg2pro.spring.rest.basis.security.test.PermissionEnum;
+import com.github.zg2pro.spring.safe.setup.security.test.PermissionCheckAnnotation;
+import com.github.zg2pro.spring.safe.setup.security.test.PermissionEnum;
 
 /**
  *

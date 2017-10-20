@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.github.zg2pro.spring.rest.basis.security;
+package com.github.zg2pro.spring.safe.setup.security;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
