@@ -37,11 +37,15 @@ import org.slf4j.LoggerFactory;
  *
  * To make sure your host is configured in UTF8, as well as your jvm
  * @author zg2pro
- * 
- * Most important, don't forget to add this to your web.xml
- * 
- * 
- * 
+ *
+ * Most important, don't forget to add the necessary to your web.xml
+ *
+ * AND also set your encoding at container level most often by adding a utf8 arg
+ * to your deploy command
+ */
+public class Utf8Verifier {
+
+    /*
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter </filter-class>
@@ -71,16 +75,7 @@ import org.slf4j.LoggerFactory;
             <page-encoding>UTF-8</page-encoding>
         </jsp-property-group>
     </jsp-config>
-    * 
-    * 
-    * AND also set your encoding at container level
-    * most often by adding a utf8 arg to your deploy command
- * 
- * 
- * 
- */
-public class Utf8Verifier {
-
+     */
     private static final Logger logger = LoggerFactory.getLogger(Utf8Verifier.class);
 
     static {
@@ -94,7 +89,6 @@ public class Utf8Verifier {
         System.setProperty("client.override.encoding", StandardCharsets.UTF_8.name());
     }
 
-    
     public static enum AvailableRdbms {
         ORACLE("SELECT * FROM NLS_DATABASE_PARAMETERS", "NLS_CHARACTERSET", "UTF8"),
         POSTGRESQL("SHOW SERVER_ENCODING", "SERVER_ENCODING", "UTF8");
@@ -110,10 +104,10 @@ public class Utf8Verifier {
         }
 
     }
-    
+
     /**
-     * checks encoding in database
-     * don't forget to close the connection when no further needed
+     * checks encoding in database don't forget to close the connection when no
+     * further needed
      *
      * @param connection
      * @param rdbms
@@ -144,5 +138,5 @@ public class Utf8Verifier {
             throw new IllegalStateException(connection.getSchema() + " database is not set to UTF8");
         }
     }
-    
+
 }
