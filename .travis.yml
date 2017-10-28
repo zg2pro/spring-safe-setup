@@ -10,6 +10,7 @@ cache:
 install: true
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
+  - export TZ=Australia/Canberra
 script: mvn install
 after_success:
   - bash <(curl -s https://codecov.io/bash)
