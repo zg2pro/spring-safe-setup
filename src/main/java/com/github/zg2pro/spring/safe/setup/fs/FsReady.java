@@ -32,7 +32,15 @@ import java.nio.file.FileSystemException;
  */
 public class FsReady {
 
-    protected void checkFileSystemIsReady(long necessaryDiskSpace, File... pathsToCheck) throws FileSystemException {
+    /**
+     * check you have the necessary disk space available in the various folders
+     * given as arguments
+     *
+     * @param necessaryDiskSpace
+     * @param pathsToCheck
+     * @throws FileSystemException
+     */
+    public static void checkFileSystemIsReady(long necessaryDiskSpace, File... pathsToCheck) throws FileSystemException {
         for (File path : pathsToCheck) {
             if (!path.canRead()) {
                 throw new FileSystemException("trouble with " + path.getAbsolutePath() + " - this path is locked for reading, please change path permissions");
@@ -46,5 +54,5 @@ public class FsReady {
             }
         }
     }
-    
+
 }
