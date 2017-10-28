@@ -49,7 +49,7 @@ public class FsReadyTest {
         } catch (FileSystemException ex) {
             assertThat(ex.getMessage()).contains("short disk space");
         }
-        if ("true".equals(System.getProperty("TRAVIS"))) {
+        if ("true".equals(System.getenv("TRAVIS"))) {
             try {
                 FsReady.checkFileSystemIsReady(0, new File("/root"));
             } catch (FileSystemException ex) {

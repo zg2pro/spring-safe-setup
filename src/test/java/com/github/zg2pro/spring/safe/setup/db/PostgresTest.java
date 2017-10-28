@@ -46,7 +46,7 @@ public class PostgresTest {
         System.out.println("######################");
         System.out.println(System.getProperty("TRAVIS"));
         System.out.println("######################");
-        if ("true".equals(System.getProperty("TRAVIS"))) {
+        if ("true".equals(System.getenv("TRAVIS"))) {
             System.out.println("WE ARE TESTING THE DB RELATED FEATURES");
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(
