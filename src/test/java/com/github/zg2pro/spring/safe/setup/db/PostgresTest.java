@@ -55,7 +55,8 @@ public class PostgresTest {
             Utf8Verifier.checkDbEncoding(connection, Utf8Verifier.AvailableRdbms.POSTGRESQL);
             UtcVerifier.checkDbTimeZone(connection, UtcVerifier.AvailableRdbms.POSTGRESQL);
             connection.close();
-        }
+        } 
+        // hard to test locally... testing in continuous integration will be considered enough
     }
 
 }
