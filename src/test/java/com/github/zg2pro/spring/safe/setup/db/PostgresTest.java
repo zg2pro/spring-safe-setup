@@ -1,5 +1,6 @@
 package com.github.zg2pro.spring.safe.setup.db;
 
+import com.github.zg2pro.spring.safe.setup.utc.UtcVerifier;
 import com.github.zg2pro.spring.safe.setup.utf8.Utf8Verifier;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -47,6 +48,7 @@ public class PostgresTest {
                 "jdbc:postgresql://" + postgresHost + ":" + postgresPort 
                         + "/" + postgresDbName, postgresDbUser, postgresDbPwd);
         Utf8Verifier.checkDbEncoding(connection, Utf8Verifier.AvailableRdbms.POSTGRESQL);
+        UtcVerifier.checkDbTimeZone(connection, UtcVerifier.AvailableRdbms.POSTGRESQL);
         connection.close();
     }
 
