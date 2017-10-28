@@ -45,6 +45,7 @@ public class PostgresTest {
     public void testCheck() throws ClassNotFoundException, SQLException {
         System.out.println("######################");
         System.out.println(System.getProperty("TRAVIS"));
+        System.out.println(System.getProperty("FOO"));
         System.out.println("######################");
         if ("true".equals(System.getenv("TRAVIS"))) {
             System.out.println("WE ARE TESTING THE DB RELATED FEATURES");

@@ -5,8 +5,8 @@ jdk:
   - oraclejdk8
 sudo: false
 env:
-  global:
-    - "TRAVIS=true"
+  - TRAVIS=true
+  - FOO=bar
 cache:
   directories:
     - $HOME/.m2
