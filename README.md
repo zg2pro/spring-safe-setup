@@ -5,6 +5,7 @@
 [![Build](https://travis-ci.org/zg2pro/spring-safe-setup.svg?branch=master)](https://travis-ci.org/zg2pro/spring-safe-setup)
 [![codecov](https://codecov.io/gh/zg2pro/spring-safe-setup/branch/master/graph/badge.svg)](https://codecov.io/gh/zg2pro/spring-safe-setup/branch/master)
 [![BCH compliance](https://bettercodehub.com/edge/badge/zg2pro/spring-safe-setup?branch=master)](https://bettercodehub.com/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.zg2pro/spring-safe-setup/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.zg2pro/spring-safe-setup)
 
 tools to make safety checks upon build or startup of your spring app
 
