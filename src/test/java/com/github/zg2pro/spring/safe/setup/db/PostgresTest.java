@@ -43,13 +43,16 @@ public class PostgresTest {
 
     @Test
     public void testCheck() throws ClassNotFoundException, SQLException {
-        Class.forName("org.postgresql.Driver");
-        Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://" + postgresHost + ":" + postgresPort 
-                        + "/" + postgresDbName, postgresDbUser, postgresDbPwd);
-        Utf8Verifier.checkDbEncoding(connection, Utf8Verifier.AvailableRdbms.POSTGRESQL);
-        UtcVerifier.checkDbTimeZone(connection, UtcVerifier.AvailableRdbms.POSTGRESQL);
-        connection.close();
+        if ("true".equals(System.getProperty("TRAVIS"))) {
+            System.out.println("WE ARE TESTING THE DB RELATED FEATURES");
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:postgresql://" + postgresHost + ":" + postgresPort
+                    + "/" + postgresDbName, postgresDbUser, postgresDbPwd);
+            Utf8Verifier.checkDbEncoding(connection, Utf8Verifier.AvailableRdbms.POSTGRESQL);
+            UtcVerifier.checkDbTimeZone(connection, UtcVerifier.AvailableRdbms.POSTGRESQL);
+            connection.close();
+        }
     }
 
 }

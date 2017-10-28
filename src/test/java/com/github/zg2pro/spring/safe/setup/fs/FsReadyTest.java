@@ -2,6 +2,8 @@ package com.github.zg2pro.spring.safe.setup.fs;
 
 import java.io.File;
 import java.nio.file.FileSystemException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.fail;
 import org.junit.Test;
@@ -45,7 +47,21 @@ public class FsReadyTest {
             FsReady.checkFileSystemIsReady(Long.MAX_VALUE, new File(System.getProperty("java.io.tmpdir")));
             fail("this much space should NOT be available");
         } catch (FileSystemException ex) {
-            assertThat(ex).isNotNull();
+            assertThat(ex.getMessage()).contains("short disk space");
+        }
+        if ("true".equals(System.getProperty("TRAVIS"))) {
+            try {
+                FsReady.checkFileSystemIsReady(0, new File("/root"));
+            } catch (FileSystemException ex) {
+                assertThat(ex.getMessage()).contains("this path is locked for");
+            }
+        } else {
+            try {
+                FsReady.checkFileSystemIsReady(0, new File("/c/Users/Administrateur"));
+                fail("this path should not be readable if no sudo");
+            } catch (FileSystemException ex) {
+                assertThat(ex.getMessage()).contains("this path is locked for");
+            }
         }
     }
 
