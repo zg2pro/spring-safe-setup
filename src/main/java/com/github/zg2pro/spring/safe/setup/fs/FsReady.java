@@ -27,7 +27,8 @@ import java.io.File;
 import java.nio.file.FileSystemException;
 
 /**
- *
+ * Utility class to help you check your folders capacity on your host
+ * 
  * @author zg2pro
  */
 public class FsReady {
