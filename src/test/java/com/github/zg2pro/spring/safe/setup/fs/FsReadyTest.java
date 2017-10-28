@@ -39,7 +39,7 @@ public class FsReadyTest {
         try {
             FsReady.checkFileSystemIsReady(0, new File(System.getProperty("java.io.tmpdir")));
         } catch (FileSystemException ex) {
-            fail("this much space should be available");
+            fail("this much space should be available", ex);
         }
         try {
             FsReady.checkFileSystemIsReady(Long.MAX_VALUE, new File(System.getProperty("java.io.tmpdir")));

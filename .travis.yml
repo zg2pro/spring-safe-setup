@@ -1,4 +1,6 @@
 language: java
+services:
+  - postgresql
 jdk:
   - oraclejdk8
 sudo: false
@@ -6,6 +8,8 @@ cache:
   directories:
     - $HOME/.m2
 install: true
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
 script: mvn install
 after_success:
   - bash <(curl -s https://codecov.io/bash)
