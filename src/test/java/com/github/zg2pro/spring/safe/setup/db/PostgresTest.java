@@ -43,6 +43,9 @@ public class PostgresTest {
 
     @Test
     public void testCheck() throws ClassNotFoundException, SQLException {
+        System.out.println("######################");
+        System.out.println(System.getProperty("TRAVIS"));
+        System.out.println("######################");
         if ("true".equals(System.getProperty("TRAVIS"))) {
             System.out.println("WE ARE TESTING THE DB RELATED FEATURES");
             Class.forName("org.postgresql.Driver");
