@@ -4,9 +4,6 @@ services:
 jdk:
   - oraclejdk8
 sudo: false
-env:
-  - TRAVIS=true
-  - FOO=bar
 cache:
   directories:
     - $HOME/.m2
