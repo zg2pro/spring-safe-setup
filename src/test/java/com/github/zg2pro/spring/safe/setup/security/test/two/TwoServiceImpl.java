@@ -1,6 +1,5 @@
 package com.github.zg2pro.spring.safe.setup.security.test.two;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 /**
