@@ -43,6 +43,7 @@ public class PostgresTest {
 
     @Test
     public void testCheck() throws ClassNotFoundException, SQLException {
+        UtcVerifier.checkHostTimezone();
         if ("true".equals(System.getenv("TRAVIS"))) {
             System.out.println("WE ARE TESTING THE DB RELATED FEATURES");
             Class.forName("org.postgresql.Driver");
