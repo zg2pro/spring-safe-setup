@@ -4,8 +4,6 @@ import com.github.zg2pro.spring.safe.setup.utc.UtcVerifier;
 import com.github.zg2pro.spring.safe.setup.utf8.Utf8Verifier;
 import java.io.File;
 import java.nio.file.FileSystemException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.fail;
 import org.junit.Test;
