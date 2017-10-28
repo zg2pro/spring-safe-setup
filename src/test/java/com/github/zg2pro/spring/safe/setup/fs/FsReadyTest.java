@@ -1,5 +1,7 @@
 package com.github.zg2pro.spring.safe.setup.fs;
 
+import com.github.zg2pro.spring.safe.setup.utc.UtcVerifier;
+import com.github.zg2pro.spring.safe.setup.utf8.Utf8Verifier;
 import java.io.File;
 import java.nio.file.FileSystemException;
 import java.util.logging.Level;
@@ -63,6 +65,8 @@ public class FsReadyTest {
                 assertThat(ex.getMessage()).contains("this path is locked for");
             }
         }
+        UtcVerifier.checkHostTimezone();
+        Utf8Verifier.checkHostEncoding();
     }
 
 }
